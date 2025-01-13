@@ -27,7 +27,7 @@ public class Donation {
 
     @NotBlank(message = "Statut must not be blank")
     @Enumerated(EnumType.STRING)
-    protected DonationStatus statut;
+    protected DonationStatus donationStatus;
 
     @ManyToOne
     protected Donor donor;

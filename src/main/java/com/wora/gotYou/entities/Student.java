@@ -1,9 +1,11 @@
 package com.wora.gotYou.entities;
 
 import com.wora.gotYou.entities.enums.Gender;
+import com.wora.gotYou.entities.enums.Level;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -14,6 +16,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -40,5 +43,12 @@ public class Student extends User {
     @NotNull(message = "Gender must not be null")
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    @NotNull(message = "Level must not be null")
+    @Enumerated(EnumType.STRING)
+    private Level level;
+
+    @OneToMany(mappedBy = "student")
+    private List<Request> requests;
 
 }

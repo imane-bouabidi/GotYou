@@ -1,10 +1,7 @@
 package com.wora.gotYou.entities;
 
 import com.wora.gotYou.entities.enums.RequestStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -15,6 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -48,4 +46,16 @@ public class Request {
     @NotNull(message = "Amount is required")
     @Min(value = 0, message = "Amount cannot be negative")
     private Double amount;
+
+    @ManyToOne
+    private Student student;
+
+    @OneToMany(mappedBy = "request")
+    private List<StudentDonation> studentDonations;
+
+    @ManyToOne
+    private DonationBox donationBox;
+
+    @OneToMany(mappedBy = "request")
+    private List<Media> media;
 }
