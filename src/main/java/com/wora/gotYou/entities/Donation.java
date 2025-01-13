@@ -1,9 +1,8 @@
 package com.wora.gotYou.entities;
 
-import com.wora.gotYou.entities.enums.DonationStatut;
+import com.wora.gotYou.entities.enums.DonationStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,5 +27,8 @@ public class Donation {
 
     @NotBlank(message = "Statut must not be blank")
     @Enumerated(EnumType.STRING)
-    protected DonationStatut statut;
+    protected DonationStatus statut;
+
+    @ManyToOne
+    protected Donor donor;
 }

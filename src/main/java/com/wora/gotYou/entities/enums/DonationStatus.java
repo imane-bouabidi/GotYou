@@ -1,6 +1,6 @@
 package com.wora.gotYou.entities.enums;
 
-public enum DonationStatut {
+public enum DonationStatus {
     WAITING,
     DONE
 }

@@ -4,6 +4,7 @@ import com.wora.gotYou.entities.enums.DonorType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -11,6 +12,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -29,4 +32,7 @@ public class Donor extends User {
     @NotNull(message = "Type must not be null")
     @Enumerated(EnumType.STRING)
     private DonorType donorType;
+
+    @OneToMany(mappedBy = "donor")
+    private List<Donation> donations;
 }
