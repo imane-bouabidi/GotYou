@@ -15,6 +15,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 @Setter
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Donation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -14,7 +14,7 @@ import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 
 public class StudentDto extends UserDto {
-    @NotBlank
+    @NotNull
     private Long id;
 
     @NotBlank(message = "Major must not be blank")

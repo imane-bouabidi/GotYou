@@ -6,5 +6,5 @@ public enum Level {
     BAC_PLUS_2,
     LICENCE,
     MASTER,
-    DOCTORAt
+    DOCTORAT
 }

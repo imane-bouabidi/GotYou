@@ -36,4 +36,8 @@ public class Media {
     @ManyToOne
     @JoinColumn(name = "request_id")
     private Request request;
+
+    @ManyToOne
+    @JoinColumn(name = "story_id")
+    private Stories story;
 }

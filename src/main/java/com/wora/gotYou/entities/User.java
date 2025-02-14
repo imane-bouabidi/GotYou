@@ -1,9 +1,7 @@
 package com.wora.gotYou.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.wora.gotYou.entities.enums.Role;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -57,4 +55,13 @@ public class User {
     protected LocalDate birthDate;
 
     protected LocalDate inscriptionDate;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+
+    @PrePersist
+    protected void onCreate() {
+        inscriptionDate = LocalDate.now();
+    }
 }
