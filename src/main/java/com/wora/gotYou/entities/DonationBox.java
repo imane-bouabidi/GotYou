@@ -1,5 +1,6 @@
 package com.wora.gotYou.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Min;
@@ -22,5 +23,6 @@ public class DonationBox extends Donation {
     private Double amount;
 
     @OneToMany(mappedBy = "donationBox")
+    @JsonIgnore
     private List<Request> requests;
 }
