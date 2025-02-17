@@ -54,7 +54,7 @@ public class Student extends User {
     @OneToMany(mappedBy = "student")
     private List<Stories> stories;
 
-    @OneToMany(mappedBy = "story")
-    private List<Media> media;
+//    @OneToMany(mappedBy = "story")
+//    private List<Media> media;
 
 }
