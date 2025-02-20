@@ -3,7 +3,9 @@ package com.wora.gotYou.services.implementation;
 import com.wora.gotYou.dtos.media.CreateMediaDto;
 import com.wora.gotYou.dtos.media.UpdateMediaDto;
 import com.wora.gotYou.dtos.media.MediaDto;
+import com.wora.gotYou.dtos.request.RequestDto;
 import com.wora.gotYou.entities.Media;
+import com.wora.gotYou.entities.Request;
 import com.wora.gotYou.mappers.MediaMapper;
 import com.wora.gotYou.repositories.MediaRepository;
 import com.wora.gotYou.services.interfaces.MediaServiceInter;
@@ -34,6 +36,12 @@ public class MediaServiceImpl implements MediaServiceInter {
 //        mediaMapper.updateMediaFromDto(dto, existingMedia);
         Media updatedMedia = mediaRepository.save(existingMedia);
         return mediaMapper.toDTO(updatedMedia);
+    }
+
+    public MediaDto getMediaById(Long id) {
+        Media media = mediaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Media not found with id: " + id));
+        return mediaMapper.toDTO(media);
     }
 
     @Override

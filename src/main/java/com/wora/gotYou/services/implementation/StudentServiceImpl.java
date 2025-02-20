@@ -3,7 +3,9 @@ package com.wora.gotYou.services.implementation;
 import com.wora.gotYou.dtos.student.CreateStudentDto;
 import com.wora.gotYou.dtos.student.UpdateStudentDto;
 import com.wora.gotYou.dtos.student.StudentDto;
+import com.wora.gotYou.dtos.user.UserDto;
 import com.wora.gotYou.entities.Student;
+import com.wora.gotYou.entities.User;
 import com.wora.gotYou.mappers.StudentMapper;
 import com.wora.gotYou.repositories.StudentRepository;
 import com.wora.gotYou.services.interfaces.StudentServiceInter;
@@ -43,6 +45,12 @@ public class StudentServiceImpl implements StudentServiceInter {
                 .map(studentMapper::toDTO)
                 .collect(Collectors.toList());
     }
+    public StudentDto getStudentById(Long id) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Student not found with id: " + id));
+        return studentMapper.toDTO(student);
+    }
+
 
     @Override
     public void delete(Long id) {

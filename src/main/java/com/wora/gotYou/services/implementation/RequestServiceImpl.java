@@ -36,6 +36,12 @@ public class RequestServiceImpl implements RequestServiceInter {
         return requestMapper.toDTO(updatedRequest);
     }
 
+    public RequestDto getRequestById(Long id) {
+        Request request = requestRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Request not found with id: " + id));
+        return requestMapper.toDTO(request);
+    }
+
     @Override
     public List<RequestDto> findAll() {
         return requestRepository.findAll()

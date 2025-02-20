@@ -6,4 +6,5 @@ import com.wora.gotYou.dtos.donation.DonationDto;
 import com.wora.gotYou.services.GenericService;
 
 public interface DonationServiceInter extends GenericService<CreateDonationDto, UpdateDonationDto, DonationDto, Long> {
+    DonationDto getDonationById(Long id);
 }

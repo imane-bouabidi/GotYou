@@ -31,9 +31,15 @@ public class StoriesServiceImpl implements StoriesServiceInter {
     public StoryDto update(UpdateStoryDto dto, Long id) {
         Stories existingStory = storiesRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Story not found"));
-        storiesMapper.updateStoryFromDto(dto, existingStory);
+//        storiesMapper.updateStoryFromDto(dto, existingStory);
         Stories updatedStory = storiesRepository.save(existingStory);
         return storiesMapper.toDTO(updatedStory);
+    }
+
+    public StoryDto getStoryById(Long id) {
+        Stories story = storiesRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Stories not found with id: " + id));
+        return storiesMapper.toDTO(story);
     }
 
     @Override

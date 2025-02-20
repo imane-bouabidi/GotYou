@@ -6,4 +6,5 @@ import com.wora.gotYou.dtos.media.MediaDto;
 import com.wora.gotYou.services.GenericService;
 
 public interface MediaServiceInter extends GenericService<CreateMediaDto, UpdateMediaDto, MediaDto, Long> {
+    MediaDto getMediaById(Long id);
 }

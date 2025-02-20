@@ -36,6 +36,12 @@ public class DonorServiceImpl implements DonorServiceInter {
         return donorMapper.toDTO(updatedDonor);
     }
 
+    public DonorDto getDonorById(Long id) {
+        Donor donor = donorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Donor not found with id: " + id));
+        return donorMapper.toDTO(donor);
+    }
+
     @Override
     public List<DonorDto> findAll() {
         return donorRepository.findAll()

@@ -44,6 +44,12 @@ public class DonationServiceImpl implements DonationServiceInter {
                 .collect(Collectors.toList());
     }
 
+    public DonationDto getDonationById(Long id) {
+        Donation donation = donationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Donation not found with id: " + id));
+        return donationMapper.toDTO(donation);
+    }
+
     @Override
     public void delete(Long id) {
         donationRepository.deleteById(id);

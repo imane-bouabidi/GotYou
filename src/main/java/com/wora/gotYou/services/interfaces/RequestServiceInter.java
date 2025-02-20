@@ -6,4 +6,5 @@ import com.wora.gotYou.dtos.request.RequestDto;
 import com.wora.gotYou.services.GenericService;
 
 public interface RequestServiceInter extends GenericService<CreateRequestDto, UpdateRequestDto, RequestDto, Long> {
+    RequestDto getRequestById(Long id);
 }
