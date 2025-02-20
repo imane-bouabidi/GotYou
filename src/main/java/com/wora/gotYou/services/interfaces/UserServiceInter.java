@@ -7,4 +7,5 @@ import com.wora.gotYou.services.GenericService;
 
 public interface UserServiceInter extends GenericService<CreateUserDto, UpdateUserDto, UserDto, Long> {
     UserDto getUserById(Long id);
+    UserDto findByEmail(String email);
 }

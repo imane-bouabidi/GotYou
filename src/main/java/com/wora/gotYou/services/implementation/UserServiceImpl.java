@@ -44,6 +44,12 @@ public class UserServiceImpl implements UserServiceInter {
         return userMapper.toDTO(user);
     }
 
+    public UserDto findByEmail(String email) {
+        User user = userRepository.findByEmail(email);
+
+        return userMapper.toDTO(user);
+    }
+
     public List<UserDto> findAll() {
         return userRepository.findAll()
                 .stream()
