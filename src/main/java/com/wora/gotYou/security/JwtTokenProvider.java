@@ -21,7 +21,7 @@ public class JwtTokenProvider {
     @Value("${app.jwt.expiration}")
     private int jwtExpirationInMs;
 
-    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+    private final Key key = Keys.hmacShaKeyFor(jwtSecret.getBytes());
 
     public String generateToken(Authentication authentication) {
         String email = authentication.getName();
