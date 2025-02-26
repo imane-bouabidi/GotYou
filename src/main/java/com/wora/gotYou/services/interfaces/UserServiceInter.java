@@ -10,4 +10,5 @@ public interface UserServiceInter extends GenericService<CreateUserDto, UpdateUs
     UserDto getUserById(Long id);
     UserDto findByEmail(String email);
     UserDto updateStatus(Long id, UserStatus status);
+    String login(String username, String password);
 }

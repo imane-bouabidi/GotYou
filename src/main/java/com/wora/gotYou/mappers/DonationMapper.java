@@ -13,6 +13,6 @@ public interface DonationMapper {
     DonationDto toDTO(Donation entity);
     Donation toEntity(CreateDonationDto dto);
     Donation toEntity(UpdateDonationDto updateDto);
-    @Mapping(target = "id", ignore = true)
+//    @Mapping(target = "id", ignore = true)
     void updateDonationFromDto(UpdateDonationDto dto, @MappingTarget Donation donation);
 }

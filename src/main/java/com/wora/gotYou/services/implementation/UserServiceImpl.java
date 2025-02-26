@@ -9,6 +9,7 @@ import com.wora.gotYou.entities.enums.Role;
 import com.wora.gotYou.entities.enums.UserStatus;
 import com.wora.gotYou.mappers.UserMapper;
 import com.wora.gotYou.repositories.UserRepository;
+import com.wora.gotYou.security.JwtTokenProvider;
 import com.wora.gotYou.services.interfaces.UserServiceInter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,6 +24,7 @@ public class UserServiceImpl implements UserServiceInter {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider jwtTokenProvider;
 
     public UserDto save(CreateUserDto dto) {
         User user = userMapper.toEntity(dto);
@@ -70,5 +72,18 @@ public class UserServiceImpl implements UserServiceInter {
         user.setStatus(status);
         User savedUser = userRepository.save(user);
         return userMapper.toDTO(savedUser);
+    }
+
+    public String login(String username, String password) {
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new RuntimeException("User not found");
+        }
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new RuntimeException("Invalid password");
+        }
+
+        return jwtTokenProvider.generateToken(username);
     }
 }

@@ -11,10 +11,14 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/admin")
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class AdminController {
 
     private final UserServiceInter userService;
+
+    public AdminController(UserServiceInter userService) {
+        this.userService = userService;
+    }
 
     @PostMapping("/users")
     public ResponseEntity<UserDto> createUser(@RequestBody CreateUserDto dto) {
