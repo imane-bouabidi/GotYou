@@ -12,6 +12,7 @@ import com.wora.gotYou.repositories.UserRepository;
 import com.wora.gotYou.security.JwtTokenProvider;
 import com.wora.gotYou.services.interfaces.UserServiceInter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -75,10 +76,7 @@ public class UserServiceImpl implements UserServiceInter {
     }
 
     public String login(String username, String password) {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new RuntimeException("User not found");
-        }
+        User user = userRepository.findByUserName(username).orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
 
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new RuntimeException("Invalid password");
