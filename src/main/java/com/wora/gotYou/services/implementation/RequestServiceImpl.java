@@ -4,6 +4,7 @@ import com.wora.gotYou.dtos.request.CreateRequestDto;
 import com.wora.gotYou.dtos.request.UpdateRequestDto;
 import com.wora.gotYou.dtos.request.RequestDto;
 import com.wora.gotYou.entities.Request;
+import com.wora.gotYou.entities.enums.RequestStatus;
 import com.wora.gotYou.mappers.RequestMapper;
 import com.wora.gotYou.repositories.RequestRepository;
 import com.wora.gotYou.services.interfaces.RequestServiceInter;
@@ -23,6 +24,7 @@ public class RequestServiceImpl implements RequestServiceInter {
     @Override
     public RequestDto save(CreateRequestDto dto) {
         Request request = requestMapper.toEntity(dto);
+        request.setStatus(RequestStatus.WAITING);
         Request savedRequest = requestRepository.save(request);
         return requestMapper.toDTO(savedRequest);
     }

@@ -31,7 +31,7 @@ public class DonationServiceImpl implements DonationServiceInter {
     public DonationDto update(UpdateDonationDto dto, Long id) {
         Donation existingDonation = donationRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Donation not found"));
-//        donationMapper.updateDonationFromDto(dto, existingDonation);
+        donationMapper.updateDonationFromDto(dto, existingDonation);
         Donation updatedDonation = donationRepository.save(existingDonation);
         return donationMapper.toDTO(updatedDonation);
     }

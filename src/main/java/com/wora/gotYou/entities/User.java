@@ -1,6 +1,7 @@
 package com.wora.gotYou.entities;
 
 import com.wora.gotYou.entities.enums.Role;
+import com.wora.gotYou.entities.enums.UserStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -60,6 +61,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Enumerated(EnumType.STRING)
+    private UserStatus status = UserStatus.PENDING;
 
     @PrePersist
     protected void onCreate() {

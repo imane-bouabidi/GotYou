@@ -35,10 +35,6 @@ public class UserDto {
     @Pattern(regexp = "^[A-Za-z0-9]{5,10}$", message = "CIN must be alphanumeric and between 5 and 10 characters")
     protected String cin;
 
-    @NotBlank(message = "Password must not be blank")
-    @Size(min = 8, message = "Password must be at least 8 characters long")
-    protected String password;
-
     @NotNull(message = "Birth date must not be null")
     @Past(message = "Birth date must be in the past")
     protected LocalDate birthDate;

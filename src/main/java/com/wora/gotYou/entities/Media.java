@@ -19,7 +19,7 @@ public class Media {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @NotBlank(message = "Title cannot be empty")
     @Size(max = 100, message = "Title cannot exceed 100 characters")

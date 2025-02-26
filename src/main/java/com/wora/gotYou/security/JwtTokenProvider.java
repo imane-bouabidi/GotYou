@@ -2,7 +2,6 @@ package com.wora.gotYou.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -25,11 +24,13 @@ public class JwtTokenProvider {
 
     public String generateToken(Authentication authentication) {
         String email = authentication.getName();
+        String role = authentication.getAuthorities().iterator().next().getAuthority();
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
 
         return Jwts.builder()
                 .setSubject(email)
+                .claim("role", role)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
                 .signWith(key)
