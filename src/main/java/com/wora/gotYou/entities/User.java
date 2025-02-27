@@ -28,9 +28,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
+    @Column(name = "user_name")
     @NotBlank(message = "The name must not be null")
     @Size(min = 5, max = 20, message = "User name must be between 5 and 20 characters")
-    protected String userName;
+    protected String username;
 
     @NotBlank(message = "The name must not be null")
     @Size(min = 5, max = 20, message = "Name must be between 5 and 20 characters")
@@ -43,10 +44,6 @@ public class User {
     @NotBlank(message = "Email must not be blank")
     @Email(message = "Email must be valid")
     protected String email;
-
-    @NotBlank(message = "Nickname must not be blank")
-    @Size(min = 3, max = 15, message = "Nickname must be between 3 and 15 characters")
-    protected String nickname;
 
     @NotBlank(message = "CIN must not be blank")
     @Pattern(regexp = "^[A-Za-z0-9]{5,10}$", message = "CIN must be alphanumeric and between 5 and 10 characters")
@@ -66,7 +63,7 @@ public class User {
     private Role role;
 
     @Enumerated(EnumType.STRING)
-    private UserStatus status = UserStatus.PENDING;
+    private UserStatus status;
 
     @PrePersist
     protected void onCreate() {

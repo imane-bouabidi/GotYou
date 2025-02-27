@@ -30,7 +30,8 @@ public class UserServiceImpl implements UserServiceInter {
     public UserDto save(CreateUserDto dto) {
         User user = userMapper.toEntity(dto);
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
-        user.setRole(dto instanceof CreateStudentDto ? Role.STUDENT : Role.DONOR);
+        user.setStatus(UserStatus.PENDING);
+        user.setRole(Role.STUDENT);
         User savedUser = userRepository.save(user);
         return userMapper.toDTO(savedUser);
     }
@@ -76,7 +77,7 @@ public class UserServiceImpl implements UserServiceInter {
     }
 
     public String login(String username, String password) {
-        User user = userRepository.findByUserName(username).orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
 
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new RuntimeException("Invalid password");

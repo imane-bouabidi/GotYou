@@ -1,5 +1,9 @@
 package com.wora.gotYou.dtos.user;
 
+import com.wora.gotYou.entities.enums.Role;
+import com.wora.gotYou.entities.enums.UserStatus;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,8 +17,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {
-    protected Long id;
 
+
+    protected Long id;
 
     @NotBlank(message = "The name must not be null")
     @Size(min = 5, max = 20, message = "User name must be between 5 and 20 characters")
@@ -32,17 +37,19 @@ public class UserDto {
     @Email(message = "Email must be valid")
     protected String email;
 
-    @NotBlank(message = "Nickname must not be blank")
-    @Size(min = 3, max = 15, message = "Nickname must be between 3 and 15 characters")
-    protected String nickname;
-
     @NotBlank(message = "CIN must not be blank")
     @Pattern(regexp = "^[A-Za-z0-9]{5,10}$", message = "CIN must be alphanumeric and between 5 and 10 characters")
     protected String cin;
 
+    @NotBlank(message = "Password must not be blank")
+    @Size(min = 8, message = "Password must be at least 8 characters long")
+    protected String password;
+
     @NotNull(message = "Birth date must not be null")
     @Past(message = "Birth date must be in the past")
     protected LocalDate birthDate;
+    private Role role;
+    private UserStatus status;
 
     protected LocalDate inscriptionDate;
 }

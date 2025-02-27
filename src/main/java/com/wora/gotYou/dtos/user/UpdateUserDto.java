@@ -1,5 +1,7 @@
 package com.wora.gotYou.dtos.user;
 
+import com.wora.gotYou.entities.enums.Role;
+import com.wora.gotYou.entities.enums.UserStatus;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
@@ -31,10 +33,6 @@ public class UpdateUserDto {
     @Email(message = "Email must be valid")
     protected String email;
 
-    @NotBlank(message = "Nickname must not be blank")
-    @Size(min = 3, max = 15, message = "Nickname must be between 3 and 15 characters")
-    protected String nickname;
-
     @NotBlank(message = "CIN must not be blank")
     @Pattern(regexp = "^[A-Za-z0-9]{5,10}$", message = "CIN must be alphanumeric and between 5 and 10 characters")
     protected String cin;
@@ -46,7 +44,8 @@ public class UpdateUserDto {
     @NotNull(message = "Birth date must not be null")
     @Past(message = "Birth date must be in the past")
     protected LocalDate birthDate;
-
+    private Role role;
+    private UserStatus status;
     protected LocalDate inscriptionDate;
 
 }
