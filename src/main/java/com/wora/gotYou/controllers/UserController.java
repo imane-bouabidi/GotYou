@@ -39,11 +39,11 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
-        UserDto user = userService.getUserById(id);
-        return ResponseEntity.ok(user);
-    }
+//    @GetMapping("/{id}")
+//    public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
+//        UserDto user = userService.getUserById(id);
+//        return ResponseEntity.ok(user);
+//    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {

@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/requests")
 @RequiredArgsConstructor
@@ -42,6 +42,13 @@ public class RequestController {
     @GetMapping("/{id}")
     public ResponseEntity<RequestDto> getRequestById(@PathVariable Long id) {
         RequestDto request = requestService.getRequestById(id);
+        return ResponseEntity.ok(request);
+    }
+
+    @GetMapping("/student")
+    public ResponseEntity<List<RequestDto>> getRequestsByStudentId() {
+
+        List<RequestDto> request = requestService.getRequestsByStudentId();
         return ResponseEntity.ok(request);
     }
 

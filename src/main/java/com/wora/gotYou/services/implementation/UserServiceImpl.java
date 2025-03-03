@@ -1,17 +1,19 @@
 package com.wora.gotYou.services.implementation;
 
-import com.wora.gotYou.dtos.student.CreateStudentDto;
 import com.wora.gotYou.dtos.user.CreateUserDto;
 import com.wora.gotYou.dtos.user.UpdateUserDto;
 import com.wora.gotYou.dtos.user.UserDto;
 import com.wora.gotYou.entities.User;
 import com.wora.gotYou.entities.enums.Role;
 import com.wora.gotYou.entities.enums.UserStatus;
+import com.wora.gotYou.exceptions.EntityNotFoundException;
 import com.wora.gotYou.mappers.UserMapper;
 import com.wora.gotYou.repositories.UserRepository;
 import com.wora.gotYou.security.JwtTokenProvider;
 import com.wora.gotYou.services.interfaces.UserServiceInter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -49,10 +51,10 @@ public class UserServiceImpl implements UserServiceInter {
         userRepository.deleteById(id);
     }
 
-    public UserDto getUserById(Long id) {
-        User user = userRepository.findById(id)
+    public User getUserById(Long id) {
+        return userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
-        return userMapper.toDTO(user);
+
     }
 
     public UserDto findByEmail(String email) {
@@ -76,8 +78,16 @@ public class UserServiceImpl implements UserServiceInter {
         return userMapper.toDTO(savedUser);
     }
 
+    public UserDto findByUserName() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        System.out.println(username);
+        User user = userRepository.findByUserName(username).orElseThrow(() -> new EntityNotFoundException("User not found with username: " + username));
+        return userMapper.toDTO(user);
+    }
+
     public String login(String username, String password) {
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+        User user = userRepository.findByUserName(username).orElseThrow(() -> new EntityNotFoundException("User not found with username: " + username));
 
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new RuntimeException("Invalid password");
