@@ -16,7 +16,7 @@ public class CreateUserDto {
 
     @NotBlank(message = "The name must not be null")
     @Size(min = 5, max = 20, message = "User name must be between 5 and 20 characters")
-    protected String username;
+    protected String userName;
 
     @NotBlank(message = "The name must not be null")
     @Size(min = 5, max = 20, message = "Name must be between 5 and 20 characters")

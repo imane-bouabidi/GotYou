@@ -32,7 +32,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
-    @Column(name = "user_name")
     @NotBlank(message = "The name must not be null")
     @Size(min = 5, max = 20, message = "User name must be between 5 and 20 characters")
     protected String userName;
