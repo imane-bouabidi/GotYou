@@ -32,6 +32,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
+    @Column(name = "user_name", unique = true)
     @NotBlank(message = "The name must not be null")
     @Size(min = 5, max = 20, message = "User name must be between 5 and 20 characters")
     protected String userName;
@@ -44,10 +45,12 @@ public class User {
     @Size(min = 5, max = 20, message = "Last name must be between 5 and 20 characters")
     protected String lastName;
 
+    @Column(unique = true)
     @NotBlank(message = "Email must not be blank")
     @Email(message = "Email must be valid")
     protected String email;
 
+    @Column(unique = true)
     @NotBlank(message = "CIN must not be blank")
     @Pattern(regexp = "^[A-Za-z0-9]{5,10}$", message = "CIN must be alphanumeric and between 5 and 10 characters")
     protected String cin;

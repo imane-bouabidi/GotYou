@@ -19,4 +19,10 @@ public class GlobalExceptionHandler {
         String errorMessage = ex.getMessage();
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(DuplicateFieldNameException.class)
+    public ResponseEntity<Object> handleDuplicateUsernameException(DuplicateFieldNameException ex) {
+        String errorMessage = ex.getMessage();
+        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+    }
 }

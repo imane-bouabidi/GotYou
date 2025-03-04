@@ -6,15 +6,12 @@ import com.wora.gotYou.dtos.student.UpdateStudentDto;
 //import com.wora.gotYou.dtos.student.UpdateStudentDto;
 import com.wora.gotYou.dtos.student.StudentDto;
 import com.wora.gotYou.entities.Student;
-import com.wora.gotYou.entities.Student;
-import com.wora.gotYou.entities.User;
 import com.wora.gotYou.entities.enums.Role;
 import com.wora.gotYou.entities.enums.UserStatus;
+import com.wora.gotYou.exceptions.DuplicateFieldNameException;
 import com.wora.gotYou.exceptions.EntityNotFoundException;
 import com.wora.gotYou.mappers.StudentMapper;
 import com.wora.gotYou.repositories.StudentRepository;
-import com.wora.gotYou.repositories.StudentRepository;
-import com.wora.gotYou.repositories.UserRepository;
 import com.wora.gotYou.services.interfaces.StudentServiceInter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -35,6 +32,13 @@ public class StudentServiceImpl  implements StudentServiceInter {
 
     @Override
     public StudentDto save(CreateStudentDto dto) {
+        if (studentRepository.findByUserName(dto.getUserName()).isPresent()) {
+            throw new DuplicateFieldNameException("Username already exists: " + dto.getUserName());
+        } else if (studentRepository.findByEmail(dto.getEmail()).isPresent()) {
+            throw new DuplicateFieldNameException("Email already exists: " + dto.getEmail());
+        } else if (studentRepository.findByCin(dto.getCin()).isPresent()) {
+            throw new DuplicateFieldNameException("Student account with this CIN already exists: " + dto.getCin());
+        }
         Student student = studentMapper.toEntity(dto);
         student.setPassword(passwordEncoder.encode(dto.getPassword()));
         student.setRole(Role.STUDENT);
@@ -67,7 +71,7 @@ public class StudentServiceImpl  implements StudentServiceInter {
     public StudentDto findByStudentName() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        Student user = studentRepository.findByUserName(username);
+        Student user = studentRepository.findByUserName(username).orElseThrow(() -> new EntityNotFoundException("Student not found"));
         return studentMapper.toDTO(user);
     }
 
