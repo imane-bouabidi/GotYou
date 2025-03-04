@@ -47,9 +47,8 @@ public class RequestController {
 
     @GetMapping("/student")
     public ResponseEntity<List<RequestDto>> getRequestsByStudentId() {
-
-        List<RequestDto> request = requestService.getRequestsByStudentId();
-        return ResponseEntity.ok(request);
+        List<RequestDto> requests = requestService.getRequestsByStudentId();
+        return ResponseEntity.ok(requests);
     }
 
     @DeleteMapping("/{id}")

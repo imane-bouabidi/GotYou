@@ -20,6 +20,7 @@ import static jakarta.persistence.InheritanceType.JOINED;
 
 @Entity
 @Inheritance(strategy = JOINED)
+@DiscriminatorColumn(name = "dtype", discriminatorType = DiscriminatorType.STRING)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

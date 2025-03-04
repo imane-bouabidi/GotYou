@@ -10,5 +10,5 @@ import com.wora.gotYou.services.GenericService;
 
 public interface StudentServiceInter extends GenericService<CreateStudentDto, UpdateStudentDto, StudentDto, Long> {
 //    UserDto findByUserName();
-    User getStudentById(Long id);
+    Student getStudentById(Long id);
 }

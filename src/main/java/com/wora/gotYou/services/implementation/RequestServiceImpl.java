@@ -11,9 +11,13 @@ import com.wora.gotYou.entities.enums.RequestStatus;
 import com.wora.gotYou.exceptions.NoDataFoundException;
 import com.wora.gotYou.mappers.RequestMapper;
 import com.wora.gotYou.repositories.RequestRepository;
+import com.wora.gotYou.repositories.UserRepository;
 import com.wora.gotYou.services.interfaces.RequestServiceInter;
 import com.wora.gotYou.services.interfaces.StudentServiceInter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +31,7 @@ public class RequestServiceImpl implements RequestServiceInter {
     private final RequestMapper requestMapper;
     private final UserServiceImpl userService;
     private final StudentServiceInter studentService;
+    private final UserRepository userRepository;
 
     @Override
     public RequestDto save(CreateRequestDto dto) {
@@ -52,18 +57,22 @@ public class RequestServiceImpl implements RequestServiceInter {
     }
 
     public List<RequestDto> getRequestsByStudentId() {
-        UserDto userDto = userService.findByUserName();
-        User user = studentService.getStudentById(userDto.getId());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
 
-//        if (!(user instanceof Student student)) {
-//            throw new NoDataFoundException("The user is not a student and has no requests.");
-//        }
+        User user = userRepository.findByUserName(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        if (!(user instanceof Student student)) {
+            throw new NoDataFoundException("The user is not a student and has no requests.");
+        }
+
         List<RequestDto> requests = student.getRequests().stream()
                 .map(requestMapper::toDTO)
                 .toList();
 
         if (requests.isEmpty()) {
-            throw new NoDataFoundException("No Requests found for this Student");
+            throw new NoDataFoundException("No requests found for this student.");
         }
 
         return requests;

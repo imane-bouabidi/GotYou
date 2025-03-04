@@ -2,10 +2,7 @@ package com.wora.gotYou.entities;
 
 import com.wora.gotYou.entities.enums.Gender;
 import com.wora.gotYou.entities.enums.Level;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -17,7 +14,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.List;
-
+@DiscriminatorValue("STUDENT")
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
