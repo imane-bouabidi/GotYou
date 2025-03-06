@@ -50,6 +50,10 @@ public class User {
     @Email(message = "Email must be valid")
     protected String email;
 
+//    @NotBlank(message = "The last name must not be null")
+//    @Size(min = 5, max = 20, message = "Last name must be between 5 and 20 characters")
+//    protected String address;
+
     @Column(unique = true)
     @NotBlank(message = "CIN must not be blank")
     @Pattern(regexp = "^[A-Za-z0-9]{5,10}$", message = "CIN must be alphanumeric and between 5 and 10 characters")
