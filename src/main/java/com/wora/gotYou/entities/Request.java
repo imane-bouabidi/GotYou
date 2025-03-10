@@ -33,7 +33,6 @@ public class Request {
     @Size(max = 255, message = "Description cannot exceed 255 characters")
     private String description;
 
-    @NotNull(message = "Request date is required")
     private LocalDate requestDate;
 
     @NotBlank(message = "Reason cannot be empty")
@@ -58,4 +57,9 @@ public class Request {
 
     @OneToMany(mappedBy = "request")
     private List<Media> media;
+
+    @PrePersist
+    protected void onCreate() {
+        requestDate = LocalDate.now();
+    }
 }

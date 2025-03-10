@@ -8,6 +8,7 @@ import com.wora.gotYou.entities.Request;
 import com.wora.gotYou.entities.Student;
 import com.wora.gotYou.entities.User;
 import com.wora.gotYou.entities.enums.RequestStatus;
+import com.wora.gotYou.exceptions.EntityNotFoundException;
 import com.wora.gotYou.exceptions.NoDataFoundException;
 import com.wora.gotYou.mappers.RequestMapper;
 import com.wora.gotYou.repositories.RequestRepository;
@@ -29,12 +30,15 @@ public class RequestServiceImpl implements RequestServiceInter {
 
     private final RequestRepository requestRepository;
     private final RequestMapper requestMapper;
-    private final UserServiceImpl userService;
+//    private final UserServiceImpl userService;
     private final StudentServiceInter studentService;
     private final UserRepository userRepository;
 
     @Override
     public RequestDto save(CreateRequestDto dto) {
+        Student student = studentService.getStudentById(dto.getStudentId());
+        if (student == null)
+            throw new EntityNotFoundException("Student not found");
         Request request = requestMapper.toEntity(dto);
         request.setStatus(RequestStatus.WAITING);
         Request savedRequest = requestRepository.save(request);

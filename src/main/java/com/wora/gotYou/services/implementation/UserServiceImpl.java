@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserServiceInter {
     public UserDto findByUserName() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        System.out.println(username);
+//        System.out.println(username);
         User user = userRepository.findByUserName(username).orElseThrow(() -> new EntityNotFoundException("User not found with username: " + username));
         return userMapper.toDTO(user);
     }
@@ -95,4 +95,9 @@ public class UserServiceImpl implements UserServiceInter {
 
         return jwtTokenProvider.generateToken(username);
     }
+
+//    public UserDto getCurrentUser(){
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//
+//    }
 }

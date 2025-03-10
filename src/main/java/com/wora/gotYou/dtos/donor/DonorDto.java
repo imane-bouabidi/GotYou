@@ -1,5 +1,6 @@
 package com.wora.gotYou.dtos.donor;
 
+import com.wora.gotYou.dtos.user.UserDto;
 import com.wora.gotYou.entities.enums.DonorType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,14 +13,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DonorDto {
-    private Long id;
-    private String name;
-    private String lastName;
-    private String email;
-    private String password;
-    private String cin;
-    private LocalDate birthDate;
+public class DonorDto extends UserDto {
     private String speciality;
     private String reason;
     private DonorType donorType;

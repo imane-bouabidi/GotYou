@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200/")
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
@@ -37,6 +38,13 @@ public class UserController {
     public ResponseEntity<List<UserDto>> getAllUsers() {
         List<UserDto> users = userService.findAll();
         return ResponseEntity.ok(users);
+    }
+
+
+    @GetMapping("/current")
+    public ResponseEntity<UserDto> getCurrentUser() {
+        UserDto user = userService.findByUserName();
+        return ResponseEntity.ok(user);
     }
 
 //    @GetMapping("/{id}")

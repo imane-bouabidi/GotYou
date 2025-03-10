@@ -23,7 +23,6 @@ public class CreateRequestDto {
     @Size(max = 255, message = "Description must be at most 255 characters")
     private String description;
 
-    @NotNull(message = "Request date must not be null")
     private LocalDate requestDate;
 
     @NotBlank(message = "Reason must not be blank")

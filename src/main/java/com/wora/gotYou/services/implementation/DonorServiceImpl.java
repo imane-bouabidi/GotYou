@@ -4,10 +4,13 @@ import com.wora.gotYou.dtos.donor.CreateDonorDto;
 import com.wora.gotYou.dtos.donor.UpdateDonorDto;
 import com.wora.gotYou.dtos.donor.DonorDto;
 import com.wora.gotYou.entities.Donor;
+import com.wora.gotYou.entities.enums.Role;
+import com.wora.gotYou.entities.enums.UserStatus;
 import com.wora.gotYou.mappers.DonorMapper;
 import com.wora.gotYou.repositories.DonorRepository;
 import com.wora.gotYou.services.interfaces.DonorServiceInter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,10 +22,14 @@ public class DonorServiceImpl implements DonorServiceInter {
 
     private final DonorRepository donorRepository;
     private final DonorMapper donorMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public DonorDto save(CreateDonorDto dto) {
         Donor donor = donorMapper.toEntity(dto);
+        donor.setPassword(passwordEncoder.encode(dto.getPassword()));
+        donor.setRole(Role.DONOR);
+        donor.setStatus(UserStatus.PENDING);
         Donor savedDonor = donorRepository.save(donor);
         return donorMapper.toDTO(savedDonor);
     }
