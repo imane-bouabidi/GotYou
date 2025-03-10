@@ -47,6 +47,7 @@ public class RequestController {
 
     @GetMapping("/student")
     public ResponseEntity<List<RequestDto>> getRequestsByStudentId() {
+        System.out.println("hna");
         List<RequestDto> requests = requestService.getRequestsByStudentId();
         return ResponseEntity.ok(requests);
     }

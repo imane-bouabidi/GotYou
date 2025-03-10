@@ -3,7 +3,7 @@ package com.wora.gotYou.services.implementation;
 import com.wora.gotYou.dtos.request.CreateRequestDto;
 import com.wora.gotYou.dtos.request.UpdateRequestDto;
 import com.wora.gotYou.dtos.request.RequestDto;
-import com.wora.gotYou.dtos.user.UserDto;
+//import com.wora.gotYou.dtos.user.UserDto;
 import com.wora.gotYou.entities.Request;
 import com.wora.gotYou.entities.Student;
 import com.wora.gotYou.entities.User;
@@ -36,10 +36,12 @@ public class RequestServiceImpl implements RequestServiceInter {
 
     @Override
     public RequestDto save(CreateRequestDto dto) {
-        Student student = studentService.getStudentById(dto.getStudentId());
+        System.out.println("student id from dto :" + dto.getStudentId());
+        Student student = studentService.getStudentById(Long.valueOf(dto.getStudentId()));
         if (student == null)
             throw new EntityNotFoundException("Student not found");
         Request request = requestMapper.toEntity(dto);
+        request.setStudent(student);
         request.setStatus(RequestStatus.WAITING);
         Request savedRequest = requestRepository.save(request);
         return requestMapper.toDTO(savedRequest);

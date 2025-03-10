@@ -37,5 +37,5 @@ public class CreateRequestDto {
     private Double amount;
 
     @NotNull(message = "Student ID must not be null")
-    private Long studentId;
+    private String studentId;
 }
