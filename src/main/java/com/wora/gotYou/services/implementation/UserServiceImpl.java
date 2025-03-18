@@ -92,7 +92,7 @@ public class UserServiceImpl implements UserServiceInter {
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new RuntimeException("Invalid password");
         }
-
+        System.out.println(user.getRole());
         return jwtTokenProvider.generateToken(username);
     }
 

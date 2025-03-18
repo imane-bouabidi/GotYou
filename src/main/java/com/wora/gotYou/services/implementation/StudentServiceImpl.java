@@ -64,8 +64,10 @@ public class StudentServiceImpl  implements StudentServiceInter {
                 .collect(Collectors.toList());
     }
     public Student getStudentById(Long id) {
-        return studentRepository.findById(id)
+        Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Student not found with id: " + id));
+        System.out.println(student.toString());
+        return student;
     }
 
     public StudentDto findByStudentName() {

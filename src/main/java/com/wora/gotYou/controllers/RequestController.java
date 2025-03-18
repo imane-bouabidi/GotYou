@@ -52,6 +52,12 @@ public class RequestController {
         return ResponseEntity.ok(requests);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<RequestDto>> searchRequests(@RequestParam String keyword) {
+        List<RequestDto> requests = requestService.searchRequests(keyword);
+        return ResponseEntity.ok(requests);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRequest(@PathVariable Long id) {
         requestService.delete(id);

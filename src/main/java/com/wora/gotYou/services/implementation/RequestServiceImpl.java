@@ -84,7 +84,13 @@ public class RequestServiceImpl implements RequestServiceInter {
         return requests;
     }
 
-
+    @Override
+    public List<RequestDto> searchRequests(String keyword) {
+        List<Request> requests = requestRepository.searchByKeyword(keyword);
+        return requests.stream()
+                .map(requestMapper::toDTO)
+                .collect(Collectors.toList());
+    }
 
     @Override
     public List<RequestDto> findAll() {

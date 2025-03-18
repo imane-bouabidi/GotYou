@@ -11,4 +11,6 @@ import java.util.List;
 public interface RequestServiceInter extends GenericService<CreateRequestDto, UpdateRequestDto, RequestDto, Long> {
     RequestDto getRequestById(Long id);
     List<RequestDto> getRequestsByStudentId();
+    List<RequestDto> searchRequests(String keyword);
+
 }

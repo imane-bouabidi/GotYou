@@ -1,5 +1,6 @@
 package com.wora.gotYou.dtos.request;
 
+import com.wora.gotYou.dtos.user.UserDto;
 import com.wora.gotYou.entities.enums.RequestStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,5 +21,5 @@ public class RequestDto {
     private String reason;
     private RequestStatus status;
     private Double amount;
-    private Long studentId;
+    private UserDto student;
 }
