@@ -49,9 +49,25 @@ public class RequestServiceImpl implements RequestServiceInter {
 
     @Override
     public RequestDto update(UpdateRequestDto dto, Long id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        User user = userRepository.findByUserName(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
         Request existingRequest = requestRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Request not found"));
-//        requestMapper.updateRequestFromDto(dto, existingRequest);
+
+        if (!existingRequest.getStudent().getUserName().equals(username)) {
+            throw new RuntimeException("You are not authorized to update this request");
+        }
+
+        existingRequest.setTitle(dto.getTitle());
+        existingRequest.setDescription(dto.getDescription());
+        existingRequest.setReason(dto.getReason());
+        existingRequest.setStatus(dto.getStatus());
+        existingRequest.setAmount(dto.getAmount());
+
         Request updatedRequest = requestRepository.save(existingRequest);
         return requestMapper.toDTO(updatedRequest);
     }

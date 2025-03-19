@@ -5,6 +5,7 @@ import com.wora.gotYou.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -40,11 +41,23 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/register/**", "/api/auth/login").permitAll()
-                        .requestMatchers("/api/requests/student").hasRole("STUDENT")
-                        .requestMatchers("/api/requests/search").hasRole("DONOR")
-                        .requestMatchers("/api/students/**").hasRole("DONOR")
-                        .requestMatchers("/api/users/current").permitAll()
+
+                        .requestMatchers(HttpMethod.GET, "/api/requests").hasAnyRole("STUDENT", "DONOR")
+
+                        .requestMatchers(HttpMethod.POST, "/api/requests").hasRole("STUDENT")
+
+                        .requestMatchers(HttpMethod.PUT, "/api/requests/{id}").hasRole("STUDENT")
+
+                        .requestMatchers(HttpMethod.DELETE, "/api/requests/{id}").hasRole("STUDENT")
+
+                        .requestMatchers(HttpMethod.GET, "/api/requests/search").hasAnyRole("STUDENT", "DONOR")
+
+                        .requestMatchers(HttpMethod.GET, "/api/students/**").hasRole("DONOR")
+
+                        .requestMatchers(HttpMethod.GET, "/api/users/current").authenticated()
+
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())
