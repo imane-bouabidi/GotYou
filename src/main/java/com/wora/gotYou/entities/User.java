@@ -75,6 +75,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 
+    @Column(name = "profile_image")
+    private String profileImage;
+
     @PrePersist
     protected void onCreate() {
         inscriptionDate = LocalDate.now();

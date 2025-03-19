@@ -6,6 +6,9 @@ import com.wora.gotYou.dtos.user.UserDto;
 import com.wora.gotYou.entities.User;
 import com.wora.gotYou.entities.enums.UserStatus;
 import com.wora.gotYou.services.GenericService;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 public interface UserServiceInter extends GenericService<CreateUserDto, UpdateUserDto, UserDto, Long> {
     User getUserById(Long id);
@@ -13,4 +16,6 @@ public interface UserServiceInter extends GenericService<CreateUserDto, UpdateUs
     UserDto updateStatus(Long id, UserStatus status);
     String login(String username, String password);
     UserDto findByUserName();
+
+    UserDto uploadProfileImage(Long userId, MultipartFile file) throws IOException;
 }

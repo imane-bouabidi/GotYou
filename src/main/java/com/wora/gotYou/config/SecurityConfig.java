@@ -42,6 +42,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/register/**", "/api/auth/login").permitAll()
 
+                        .requestMatchers(HttpMethod.GET, "/api/upload-profile-image").hasAnyRole("STUDENT", "DONOR")
+
                         .requestMatchers(HttpMethod.GET, "/api/requests").hasAnyRole("STUDENT", "DONOR")
 
                         .requestMatchers(HttpMethod.POST, "/api/requests").hasRole("STUDENT")

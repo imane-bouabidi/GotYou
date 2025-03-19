@@ -51,5 +51,7 @@ public class UserDto {
     private Role role;
     private UserStatus status;
 
+    private String profileImage;
+
     protected LocalDate inscriptionDate;
 }
