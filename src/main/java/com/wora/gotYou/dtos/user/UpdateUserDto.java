@@ -43,7 +43,7 @@ public class UpdateUserDto {
 
     @NotNull(message = "Birth date must not be null")
     @Past(message = "Birth date must be in the past")
-    protected LocalDate birthDate;
+    protected String birthDate;
     private Role role;
     private UserStatus status;
     protected LocalDate inscriptionDate;

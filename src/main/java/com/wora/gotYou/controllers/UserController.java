@@ -40,7 +40,9 @@ public class UserController {
             @PathVariable Long id,
             @RequestBody UpdateUserDto dto
     ) {
+        System.out.println(dto.getBirthDate());
         UserDto updatedUser = userService.update(dto, id);
+        System.out.println("Données mises à jour : " + updatedUser.toString());
         return ResponseEntity.ok(updatedUser);
     }
 

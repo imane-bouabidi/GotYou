@@ -25,6 +25,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -72,13 +73,21 @@ public class UserServiceImpl implements UserServiceInter {
         return userMapper.toDTO(updatedUser);
     }
 
-    public UserDto update(UpdateUserDto dto,Long id) {
-        User existingUser = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+    public UserDto update(UpdateUserDto dto, Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        userMapper.toEntity(dto);
-        User updatedUser = userRepository.save(existingUser);
-        return userMapper.toDTO(updatedUser);
+        if (dto.getBirthDate() != null) {
+            LocalDate birthDate = LocalDate.parse(dto.getBirthDate());
+            user.setBirthDate(birthDate);
+        }
+//        user.setUserName(dto.getUserName());
+        user.setName(dto.getName());
+        user.setLastName(dto.getLastName());
+        user.setEmail(dto.getEmail());
+        user.setCin(dto.getCin());
+
+        return userMapper.toDTO(userRepository.save(user));
     }
 
     public void delete(Long id) {
