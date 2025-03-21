@@ -30,7 +30,6 @@ public class RequestServiceImpl implements RequestServiceInter {
 
     private final RequestRepository requestRepository;
     private final RequestMapper requestMapper;
-//    private final UserServiceImpl userService;
     private final StudentServiceInter studentService;
     private final UserRepository userRepository;
 
@@ -110,10 +109,21 @@ public class RequestServiceImpl implements RequestServiceInter {
 
     @Override
     public List<RequestDto> findAll() {
-        return requestRepository.findAll()
+        List<RequestDto> requests = requestRepository.findAll()
                 .stream()
                 .map(requestMapper::toDTO)
-                .collect(Collectors.toList());
+                .toList();
+        System.out.println(requests.get(1).getStatus().getClass().getName());
+        return requests;
+    }
+
+    @Override
+    public RequestDto updateStatus(Long id, RequestStatus status) {
+        Request request = requestRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(" request not found with id: " + id));
+        request.setStatus(status);
+        Request updatedRequest = requestRepository.save(request);
+        return requestMapper.toDTO(updatedRequest);
     }
 
     @Override

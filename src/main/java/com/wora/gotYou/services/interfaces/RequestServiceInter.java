@@ -4,6 +4,7 @@ import com.wora.gotYou.dtos.request.CreateRequestDto;
 import com.wora.gotYou.dtos.request.UpdateRequestDto;
 import com.wora.gotYou.dtos.request.RequestDto;
 import com.wora.gotYou.entities.Request;
+import com.wora.gotYou.entities.enums.RequestStatus;
 import com.wora.gotYou.services.GenericService;
 
 import java.util.List;
@@ -12,5 +13,6 @@ public interface RequestServiceInter extends GenericService<CreateRequestDto, Up
     RequestDto getRequestById(Long id);
     List<RequestDto> getRequestsByStudentId();
     List<RequestDto> searchRequests(String keyword);
+    RequestDto updateStatus(Long id, RequestStatus status);
 
 }

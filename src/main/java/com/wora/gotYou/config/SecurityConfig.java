@@ -44,9 +44,9 @@ public class SecurityConfig {
 
                         .requestMatchers(HttpMethod.GET, "/api/upload-profile-image").hasAnyRole("STUDENT", "DONOR")
 
-                        .requestMatchers(HttpMethod.GET, "/api/requests").hasAnyRole("STUDENT", "DONOR")
+                        .requestMatchers(HttpMethod.GET, "/api/requests").hasAnyRole("STUDENT", "DONOR", "ADMIN")
 
-                        .requestMatchers(HttpMethod.POST, "/api/requests").hasRole("STUDENT")
+//                        .requestMatchers(HttpMethod.POST, "/api/requests/**").hasRole("ADMIN")
 
                         .requestMatchers(HttpMethod.PUT, "/api/requests/{id}").hasRole("STUDENT")
 
@@ -59,6 +59,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/users/current").authenticated()
 
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
+//                        .requestMatchers("/api/admin/student-requests/status/**").hasRole("ADMIN")
 
                         .anyRequest().authenticated()
                 )

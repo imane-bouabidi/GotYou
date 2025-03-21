@@ -121,10 +121,18 @@ public class UserServiceImpl implements UserServiceInter {
         return userMapper.toDTO(savedUser);
     }
 
+    @Override
+    public UserDto updateRole(Long id, Role role) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+        user.setRole(role);
+        User updatedUser = userRepository.save(user);
+        return userMapper.toDTO(updatedUser);
+    }
+
     public UserDto findByUserName() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-//        System.out.println(username);
         User user = userRepository.findByUserName(username).orElseThrow(() -> new EntityNotFoundException("User not found with username: " + username));
         System.out.println("user image from UserServiceImpl : " + user.getProfileImage());
         return userMapper.toDTO(user);
