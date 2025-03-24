@@ -49,6 +49,12 @@ public class DonorServiceImpl implements DonorServiceInter {
         return donorMapper.toDTO(donor);
     }
 
+    public DonorDto findByUserName(String userName) {
+        Donor donor = donorRepository.findByUserName(userName)
+                .orElseThrow(() -> new RuntimeException("Donor not found with user name: " + userName));
+        return donorMapper.toDTO(donor);
+    }
+
     @Override
     public List<DonorDto> findAll() {
         return donorRepository.findAll()

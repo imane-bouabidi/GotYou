@@ -18,8 +18,7 @@ public class UpdateDonationDto {
     @NotNull(message = "Donation date must not be null")
     private LocalDate donationDate;
 
-    @NotNull(message = "Anonymous option must not be null")
-    private Boolean anonymous;
+    private String stripePaymentId;
 
     @NotNull(message = "Donation status must not be null")
     private DonationStatus donationStatus;

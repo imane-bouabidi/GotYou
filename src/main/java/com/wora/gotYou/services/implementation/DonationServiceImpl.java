@@ -1,5 +1,8 @@
 package com.wora.gotYou.services.implementation;
 
+import com.stripe.exception.StripeException;
+import com.stripe.model.PaymentIntent;
+import com.wora.gotYou.config.StripeService;
 import com.wora.gotYou.dtos.donation.CreateDonationDto;
 import com.wora.gotYou.dtos.donation.UpdateDonationDto;
 import com.wora.gotYou.dtos.donation.DonationDto;
@@ -19,6 +22,7 @@ public class DonationServiceImpl implements DonationServiceInter {
 
     private final DonationRepository donationRepository;
     private final DonationMapper donationMapper;
+    private final StripeService stripeService;
 
     @Override
     public DonationDto save(CreateDonationDto dto) {
@@ -49,6 +53,15 @@ public class DonationServiceImpl implements DonationServiceInter {
                 .orElseThrow(() -> new RuntimeException("Donation not found with id: " + id));
         return donationMapper.toDTO(donation);
     }
+
+//    private String processPayment(Double amount) throws StripeException {
+//        if (amount > 0) {
+//            PaymentIntent paymentIntent = stripeService.processPayment(amount);
+//            log.info("Stripe Payment Successful: {}", paymentIntent.getId());
+//            return paymentIntent.getClientSecret();
+//        }
+//        return null;
+//    }
 
     @Override
     public void delete(Long id) {

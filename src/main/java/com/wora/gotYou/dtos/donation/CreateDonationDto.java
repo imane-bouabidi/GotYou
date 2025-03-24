@@ -1,6 +1,9 @@
 package com.wora.gotYou.dtos.donation;
 
+import com.wora.gotYou.entities.Request;
 import com.wora.gotYou.entities.enums.DonationStatus;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -15,11 +19,11 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class CreateDonationDto {
 
-    @NotNull(message = "Donation date must not be null")
-    private LocalDate donationDate;
+    private Request request;
 
-    @NotNull(message = "Anonymous option must not be null")
-    private Boolean anonymous;
+    private LocalDateTime donationDate;
+
+    private String stripePaymentId;
 
     @NotNull(message = "Donation status must not be null")
     private DonationStatus donationStatus;

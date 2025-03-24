@@ -7,4 +7,5 @@ import com.wora.gotYou.services.GenericService;
 
 public interface DonorServiceInter extends GenericService<CreateDonorDto, UpdateDonorDto, DonorDto, Long> {
     DonorDto getDonorById(Long id);
+//    DonorDto findByUserName(String userName);
 }

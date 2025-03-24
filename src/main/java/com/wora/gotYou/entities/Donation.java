@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
@@ -19,17 +20,23 @@ import java.time.LocalDate;
 public class Donation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
+    private Long id;
 
-    protected LocalDate donationDate;
+    private Double amount;
 
-    @NotBlank(message = "Anonymous option must not be blank")
-    protected Boolean anonymous;
+    @ManyToOne
+    @JoinColumn(name = "donor_id")
+    private Donor donor;
+
+    @ManyToOne
+    @JoinColumn(name = "request_id")
+    private Request request;
+
+    private LocalDateTime donationDate;
+
+    private String stripePaymentId;
 
     @NotBlank(message = "Statut must not be blank")
     @Enumerated(EnumType.STRING)
     protected DonationStatus donationStatus;
-
-    @ManyToOne
-    protected Donor donor;
 }
