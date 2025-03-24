@@ -46,7 +46,6 @@ public class SecurityConfig {
 
                         .requestMatchers(HttpMethod.GET, "/api/requests").hasAnyRole("STUDENT", "DONOR", "ADMIN")
 
-//                        .requestMatchers(HttpMethod.POST, "/api/requests/**").hasRole("ADMIN")
 
                         .requestMatchers(HttpMethod.PUT, "/api/requests/{id}").hasRole("STUDENT")
 
@@ -55,7 +54,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/requests/search").hasAnyRole("STUDENT", "DONOR")
 
                         .requestMatchers(HttpMethod.GET, "/api/students/**").hasRole("DONOR")
-//                        .requestMatchers(HttpMethod.GET, "/api/donations/create-checkout-session").hasRole("DONOR")
+                        .requestMatchers(HttpMethod.POST, "/api/donations/create-checkout-session").hasRole("DONOR")
                         .requestMatchers(HttpMethod.GET, "/api/donations/create-checkout-session/**").hasRole("DONOR")
 
                         .requestMatchers(HttpMethod.GET, "/api/users/current").authenticated()
