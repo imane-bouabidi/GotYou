@@ -92,12 +92,12 @@ public class DonationController {
             if ("paid".equals(session.getPaymentStatus())) {
                 String username = session.getMetadata().get("username");
                 Long requestId = Long.parseLong(session.getMetadata().get("requestId"));
-                Double amount = session.getAmountTotal() / 100.0; // Convertit les cents en dollars
+                Double amount = session.getAmountTotal() / 100.0;
 
                 Donation donation = new Donation();
                 donation.setAmount(amount);
                 donation.setDonationDate(LocalDateTime.now());
-                donation.setDonationStatus(DonationStatus.SUCCESS);
+                donation.setDonationStatus(DonationStatus.DONE);
                 donation.setDonor(donorRepository.findByUserName(username).orElseThrow());
                 donation.setRequest(requestRepository.findById(requestId).orElseThrow());
                 donation.setStripePaymentId(session.getPaymentIntent());

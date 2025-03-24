@@ -54,6 +54,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/requests/search").hasAnyRole("STUDENT", "DONOR")
 
                         .requestMatchers(HttpMethod.GET, "/api/students/**").hasRole("DONOR")
+                        .requestMatchers("/api/donations/success").hasRole("DONOR")
                         .requestMatchers(HttpMethod.POST, "/api/donations/create-checkout-session").hasRole("DONOR")
                         .requestMatchers(HttpMethod.GET, "/api/donations/create-checkout-session/**").hasRole("DONOR")
 
