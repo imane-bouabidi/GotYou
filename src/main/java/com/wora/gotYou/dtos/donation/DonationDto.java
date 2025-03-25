@@ -1,7 +1,10 @@
 package com.wora.gotYou.dtos.donation;
 
+import com.wora.gotYou.dtos.request.RequestDto;
+import com.wora.gotYou.entities.Donation;
 import com.wora.gotYou.entities.Request;
 import com.wora.gotYou.entities.enums.DonationStatus;
+import com.wora.gotYou.mappers.RequestMapper;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,7 +20,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class DonationDto {
     private Long id;
-    private Request request;
+    private RequestDto request;
 
     private LocalDateTime donationDate;
 
@@ -31,4 +34,19 @@ public class DonationDto {
 
     @NotNull(message = "Amount must not be null")
     private Double amount;
+
+//    public DonationDto(Donation donation) {
+//        this.id = donation.getId();
+//
+//    }
+
+//    public DonationDto(Donation donation) {
+//        this.id = donation.getId();
+//        this.amount = donation.getAmount();
+//        this.donationDate = donation.getDonationDate();
+//        this.donationStatus = donation.getDonationStatus();
+//        this.donorId = donation.getDonor().getId();
+//        this.request = RequestMapper donation.getRequest();
+//        this.stripePaymentId = donation.getStripePaymentId();
+//    }
 }

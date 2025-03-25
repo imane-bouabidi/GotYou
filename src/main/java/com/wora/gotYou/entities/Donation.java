@@ -1,5 +1,6 @@
 package com.wora.gotYou.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.wora.gotYou.entities.enums.DonationStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -24,8 +25,9 @@ public class Donation {
 
     private Double amount;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "donor_id")
+    @JsonManagedReference
     private Donor donor;
 
     @ManyToOne

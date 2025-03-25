@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/donations")
@@ -36,6 +37,8 @@ public class DonationController {
     private final RequestRepository requestRepository;
     private final DonorRepository donorRepository;
     private final DonationRepository donationRepository;
+    private final DonationServiceInter donationservice;
+
 
     private static final Logger logger = LoggerFactory.getLogger(DonationController.class);
     @PostMapping
@@ -127,18 +130,45 @@ public class DonationController {
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<DonationDto> updateDonation(
-            @PathVariable Long id,
-            @RequestBody UpdateDonationDto dto
-    ) {
-        DonationDto updatedDonation = donationService.update(dto, id);
-        return ResponseEntity.ok(updatedDonation);
+    @GetMapping("/donor-donations")
+    public ResponseEntity<List<DonationDto>> getDonorDonations() {
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String username = authentication.getName();
+            Donor donor = donorRepository.findByUserName(username).orElseThrow(() -> new RuntimeException("Donor not found"));
+            List<DonationDto> donations = donationservice.findByDonorId(donor.getId());
+//            List<DonationDto> donationDTOs = donations.stream()
+//                    .map(DonationDto::new)
+//                    .collect(Collectors.toList());
+            for (DonationDto d : donations) {
+                System.out.println(d.getId());
+            }
+            logger.info("Nombre de dons renvoyés : {}", donations.size());
+            return ResponseEntity.ok(donations);
+        } catch (Exception e) {
+            logger.error("Erreur lors de la récupération des dons : {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
+
+//    @PutMapping("/{id}")
+//    public ResponseEntity<DonationDto> updateDonation(
+//            @PathVariable Long id,
+//            @RequestBody UpdateDonationDto dto
+//    ) {
+//        DonationDto updatedDonation = donationService.update(dto, id);
+//        return ResponseEntity.ok(updatedDonation);
+//    }
 
     @GetMapping
     public ResponseEntity<List<DonationDto>> getAllDonations() {
         List<DonationDto> donations = donationService.findAll();
+        return ResponseEntity.ok(donations);
+    }
+
+    @GetMapping("/request/{requestId}")
+    public ResponseEntity<List<DonationDto>> getDonationsByRequest(@PathVariable Long requestId) {
+        List<DonationDto> donations = donationService.getDonationsByRequest(requestId);
         return ResponseEntity.ok(donations);
     }
 

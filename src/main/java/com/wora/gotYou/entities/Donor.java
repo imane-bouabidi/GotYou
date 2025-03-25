@@ -1,10 +1,8 @@
 package com.wora.gotYou.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.wora.gotYou.entities.enums.DonorType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -33,6 +31,7 @@ public class Donor extends User {
     @Enumerated(EnumType.STRING)
     private DonorType donorType;
 
-    @OneToMany(mappedBy = "donor")
+    @OneToMany(mappedBy = "donor", fetch = FetchType.LAZY)
+    @JsonBackReference
     private List<Donation> donations;
 }

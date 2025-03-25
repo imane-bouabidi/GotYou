@@ -13,6 +13,7 @@ import com.wora.gotYou.services.interfaces.DonationServiceInter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,6 +54,23 @@ public class DonationServiceImpl implements DonationServiceInter {
                 .orElseThrow(() -> new RuntimeException("Donation not found with id: " + id));
         return donationMapper.toDTO(donation);
     }
+
+
+    public List<DonationDto> getDonationsByRequest(Long requestId) {
+        return donationRepository.findDonationDtosByRequestId(requestId);
+    }
+
+    @Override
+    public List<DonationDto> findByDonorId(Long donorId) {
+        return donationRepository.findAll()
+                .stream()
+                .filter(donation -> donation.getDonor().getId().equals(donorId))
+                .sorted(Comparator.comparing(Donation::getId))
+                .map(donationMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+
 
 //    private String processPayment(Double amount) throws StripeException {
 //        if (amount > 0) {
