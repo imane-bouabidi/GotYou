@@ -31,7 +31,7 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final UserDetailsService userDetailsService;
-    private final com.wora.gotYou.security.JwtTokenProvider JwtTokenProvider;
+    private final JwtTokenProvider JwtTokenProvider;
 
 
     @Bean
@@ -67,7 +67,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())
-                .addFilterBefore(new JwtAuthenticationFilter(JwtTokenProvider, userDetailsService), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

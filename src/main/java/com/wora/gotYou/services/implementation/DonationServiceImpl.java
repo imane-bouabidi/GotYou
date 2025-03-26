@@ -7,6 +7,7 @@ import com.wora.gotYou.dtos.donation.CreateDonationDto;
 import com.wora.gotYou.dtos.donation.UpdateDonationDto;
 import com.wora.gotYou.dtos.donation.DonationDto;
 import com.wora.gotYou.entities.Donation;
+import com.wora.gotYou.entities.enums.DonationStatus;
 import com.wora.gotYou.mappers.DonationMapper;
 import com.wora.gotYou.repositories.DonationRepository;
 import com.wora.gotYou.services.interfaces.DonationServiceInter;
@@ -84,6 +85,15 @@ public class DonationServiceImpl implements DonationServiceInter {
 //        }
 //        return null;
 //    }
+
+    public List<DonationDto> findByStatusWaiting(){
+        return donationRepository.findAll()
+                .stream()
+                .filter(donation -> donation.getDonationStatus().equals(DonationStatus.WAITING))
+                .map(donationMapper::toDTO)
+                .toList();
+    }
+
 
     @Override
     public void delete(Long id) {
