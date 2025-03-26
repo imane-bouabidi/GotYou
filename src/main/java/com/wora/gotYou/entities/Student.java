@@ -26,11 +26,13 @@ public class Student extends User {
     @Size(max = 50, message = "Major must be at most 50 characters")
     private String major;
 
-    @Size(max = 255, message = "Situation details must be at most 255 characters")
+    @Column(length = 1000)
+    @Size(max = 1000, message = "Situation details must be at most 1000 characters")
     private String situationDetails;
 
+    @Column(length = 500)
     @NotBlank(message = "Situation title must not be blank")
-    @Size(max = 100, message = "Situation title must be at most 100 characters")
+    @Size(max = 500, message = "Situation title must be at most 100 characters")
     private String situationTitle;
 
     @NotNull(message = "Start date must not be null")

@@ -26,17 +26,17 @@ public class Request {
     private Long id;
 
     @NotBlank(message = "Title cannot be empty")
-    @Size(max = 100, message = "Title cannot exceed 100 characters")
+    @Size(max = 500, message = "Title cannot exceed 100 characters")
     private String title;
 
     @NotBlank(message = "Description cannot be empty")
-    @Size(max = 255, message = "Description cannot exceed 255 characters")
+    @Size(max = 1000, message = "Description cannot exceed 255 characters")
     private String description;
 
     private LocalDate requestDate;
 
     @NotBlank(message = "Reason cannot be empty")
-    @Size(max = 200, message = "Reason cannot exceed 200 characters")
+    @Size(max = 500, message = "Reason cannot exceed 200 characters")
     private String reason;
 
     @NotNull(message = "Status is required")

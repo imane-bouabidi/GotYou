@@ -76,9 +76,11 @@ public class AdminController {
     @PutMapping("/student-requests/status/{id}")
     public ResponseEntity<RequestDto> updateStudentRequestStatus(
             @PathVariable Long id,
-            @RequestBody RequestStatus statusRequest
+            @RequestBody String statusRequest
     ) {
-        RequestDto updatedRequest = requestService.updateStatus(id, statusRequest);
+        RequestStatus requestStatus = RequestStatus.valueOf(statusRequest.replaceAll("\"", ""));
+
+        RequestDto updatedRequest = requestService.updateStatus(id, requestStatus);
         return ResponseEntity.ok(updatedRequest);
     }
 }

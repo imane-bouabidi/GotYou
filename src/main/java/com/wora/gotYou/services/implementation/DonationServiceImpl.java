@@ -56,9 +56,9 @@ public class DonationServiceImpl implements DonationServiceInter {
     }
 
 
-    public List<DonationDto> getDonationsByRequest(Long requestId) {
-        return donationRepository.findDonationDtosByRequestId(requestId);
-    }
+//    public List<DonationDto> getDonationsByRequest(Long requestId) {
+//        return donationRepository.findDonationDtosByRequestId(requestId);
+//    }
 
     @Override
     public List<DonationDto> findByDonorId(Long donorId) {
@@ -70,6 +70,10 @@ public class DonationServiceImpl implements DonationServiceInter {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<DonationDto> getDonationsByRequest(Long donorId) {
+        return List.of();
+    }
 
 
 //    private String processPayment(Double amount) throws StripeException {

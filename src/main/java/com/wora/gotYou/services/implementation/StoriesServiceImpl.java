@@ -6,10 +6,12 @@ import com.wora.gotYou.dtos.stories.StoryDto;
 import com.wora.gotYou.entities.Stories;
 import com.wora.gotYou.mappers.StoriesMapper;
 import com.wora.gotYou.repositories.StoriesRepository;
+import com.wora.gotYou.repositories.StudentRepository;
 import com.wora.gotYou.services.interfaces.StoriesServiceInter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,10 +21,13 @@ public class StoriesServiceImpl implements StoriesServiceInter {
 
     private final StoriesRepository storiesRepository;
     private final StoriesMapper storiesMapper;
+    private final StudentRepository studentRepository;
 
     @Override
     public StoryDto save(CreateStoryDto dto) {
         Stories story = storiesMapper.toEntity(dto);
+        story.setDatePublished(LocalDate.now());
+        studentRepository.findById(dto.getStudentId()).ifPresent(story::setStudent);
         Stories savedStory = storiesRepository.save(story);
         return storiesMapper.toDTO(savedStory);
     }

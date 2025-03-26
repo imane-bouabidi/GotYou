@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/gotYou_
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=Imane2002***
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_SHOW_SQL=true
+      - APP_JWT_SECRET=${JWT_SECRET:-DefaultSecretKeyForDevOnly}
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY:-sk_test_51R697o4RRHFJGYKcg7iNBbhZ7PWlsc3cjmEH8zKOYh80iL0h1ZtNqZ946tDROaIO2S8DxcEemGHdQG1WNzak5Erk004RzyQP0F}
+      - UPLOAD_DIRECTORY=/uploads
+    volumes:
+      - upload-data:/uploads
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  db:
+    image: postgres:16
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=gotYou_
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Imane2002***
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+volumes:
+  db-data:
+  upload-data:
+
+networks:
+  app-network:
+    driver: bridge
